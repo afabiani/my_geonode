@@ -1,0 +1,27 @@
+{% extends 'geonode-mapstore-client/_geonode_config.html' %}
+{% block override_local_config %}
+<script>
+    window.__GEONODE_CONFIG__.overrideLocalConfig = function(localConfig, _) {
+        // Here the localConfig can be overridden and/or extended
+
+        Object.keys(localConfig.plugins).forEach((pageName) => {
+            localConfig.plugins[pageName].forEach((plugin) => {
+                if (['DetailViewer', 'ResourcesGrid'].includes(plugin.name) && plugin.cfg && (plugin.cfg.tabs || plugin.cfg.detailsTabs)) {
+                    (plugin.cfg.tabs || plugin.cfg.detailsTabs).forEach((tab) => {
+                        if (Array.isArray(tab.items)) {
+                            // add the new field in the detail panel
+                            tab.items.push({
+                              "type": "html",
+                              "label": "Custom Metadata",
+                              "value": "{context.get(state('gnResourceData'), 'custom_md')}"
+                            });
+                        }
+                    });
+                }
+            });
+        });
+
+        return localConfig;
+    };
+</script>
+{% endblock %}

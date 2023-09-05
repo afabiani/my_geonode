@@ -1,0 +1,4 @@
+# git+https://github.com/GeoNode/geonode.git@4.1.x#egg=GeoNode
+# GeoNode==4.1.1
+-e /opt/geonode
+# -e git+https://github.com/afabiani/geonode.git@geonode_training_4x#egg=GeoNode
